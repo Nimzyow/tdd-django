@@ -42,17 +42,23 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element(By.ID, "id_list_table")
         rows = table.find_elements(By.TAG_NAME, "tr")
-        self.assertTrue(
-            any(row.text == "1: Buy oat milk" for row in rows),
-            "New to do item did not appear in table"
-        )
+        self.assertIn("1: Buy oat milk", [row.text for row in rows])
 
         # There is still a text box inviting him to add another item.
         # He enters "Use Oat milk in Protein shake"
-
-        self.fail("Finish the test!")
+        inputbox = self.browser.find_element(By.ID, "id_new_item")
+        inputbox.send_keys("Use Oat milk in protein shake")
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
 
         # The page updates again and now shows both items on his list
+
+        table = self.browser.find_element(By.ID, "id_list_table")
+        rows = table.find_elements(By.TAG_NAME, "tr")
+        self.assertIn("1: Buy oat milk", [row.text for row in rows])
+        self.assertIn("2: Use Oat milk in protein shake", [row.text for row in rows])
+
+        self.fail("Finish the test!")
 
         # He wonders whether the site will remember the list. Then he sees
         # That the site has generated a unique URL for him. There is some

@@ -1,8 +1,9 @@
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 
 # Create your views here.
-def home_page(request):
+def home_page(request: HttpRequest):
     '''
     Instead of building our own HttpResponse, we now use the Django render
     function.  It takes the request as its first parameter (for reasons
@@ -11,4 +12,6 @@ def home_page(request):
     your apps directories. Then it builds an HttpResponse for you, based
     on the content of the template.”
     '''
-    return render(request, "home.html")
+    return render(request, "home.html", {
+        "new_item_text": request.POST.get("item_text", "")
+    })
