@@ -40,10 +40,11 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
-        table = self.browser.find_element(By.ID, "is_list_table")
+        table = self.browser.find_element(By.ID, "id_list_table")
         rows = table.find_elements(By.TAG_NAME, "tr")
         self.assertTrue(
-            any(row.text == "1: Buy oat milk" for row in rows)
+            any(row.text == "1: Buy oat milk" for row in rows),
+            "New to do item did not appear in table"
         )
 
         # There is still a text box inviting him to add another item.
