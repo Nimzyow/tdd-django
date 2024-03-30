@@ -50,7 +50,9 @@ class HomePageTest(TestCase):
         response = self.client.post("/", data={"item_text": "A new list item"})
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response["location"], "/")
+        self.assertEqual(
+            response["location"], "/lists/the-only-list-in-the-world"
+        )
 
     def test_displays_all_list_items(self):
         Item.objects.create(text="item 1")
@@ -60,6 +62,7 @@ class HomePageTest(TestCase):
 
         self.assertIn("item 1", response.content.decode())
         self.assertIn("item 2", response.content.decode())
+
 
 class ItemModelTest(TestCase):
     def test_saving_and_retrieving_items(self):
@@ -78,3 +81,19 @@ class ItemModelTest(TestCase):
         second_saved_item = saved_items[1]
         self.assertEqual("The first (ever) list item", first_saved_item.text)
         self.assertEqual("Item the second", second_saved_item.text)
+
+
+class LiveViewTest(TestCase):
+    def test_displays_all_items(self):
+        Item.objects.create(text="item 1")
+        Item.objects.create(text="item 2")
+
+        response = self.client.get("/lists/the-only-list-in-the-world")
+        '''
+            Here's a new helper method: instead of using the slightly annoying
+            assertIn/response.content.decode() dance, Django provides the
+            assertContains method, which knows how to deal with responses and
+            the bytes of their content.
+        '''
+        self.assertContains(response, "item 1")
+        self.assertContains(response, "item 2")

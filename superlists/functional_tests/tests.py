@@ -93,7 +93,7 @@ class NewVisitorTest(LiveServerTestCase):
         # We use a new browser session to make sure that no information
         # of Nimas is coming through from cookies
         self.browser.quit()
-        self.browser = webdriver.firefox()
+        self.browser = webdriver.Firefox()
 
         # Francies visits the new home page. No sign on Nimas list
         self.browser.get(self.live_server_url)
