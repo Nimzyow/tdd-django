@@ -1,5 +1,6 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from lists.models import Item
 
 
 # Create your views here.
@@ -12,6 +13,12 @@ def home_page(request: HttpRequest):
     your apps directories. Then it builds an HttpResponse for you, based
     on the content of the template.”
     '''
-    return render(request, "home.html", {
-        "new_item_text": request.POST.get("item_text", "")
-    })
+    if request.method == "POST":
+        new_item_text = request.POST["item_text"]
+        # objects.create is a shorthand for creating a new item without the 
+        # need to call save()
+        Item.objects.create(text=new_item_text)
+        return redirect("/")
+
+    items = Item.objects.all()
+    return render(request, "home.html", {"items": items})
