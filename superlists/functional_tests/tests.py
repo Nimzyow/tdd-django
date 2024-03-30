@@ -65,7 +65,6 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # The page updates again and now shows both items on his list
-
         self.wait_for_row_in_list_table("1: Buy oat milk")
         self.wait_for_row_in_list_table("2: Use Oat milk in protein shake")
 
