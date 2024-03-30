@@ -1,5 +1,4 @@
 import time
-import unittest
 
 from django.test import LiveServerTestCase
 from selenium import webdriver
@@ -87,14 +86,14 @@ class NewVisitorTest(LiveServerTestCase):
         nima_list_url = self.browser.current_url
         self.assertRegex(nima_list_url, '/lists/.+')
 
-        # Now a new user, Francies, comes along to the site
+        # Now a new user, Francis, comes along to the site
 
         # We use a new browser session to make sure that no information
-        # of Nimas is coming through from cookies
+        # of Nima's is coming through from cookies
         self.browser.quit()
         self.browser = webdriver.Firefox()
 
-        # Francies visits the new home page. No sign on Nimas list
+        # Francis visits the new home page. No sign on Nima's list
         self.browser.get(self.live_server_url)
         page_text = self.browser.find_element(By.TAG_NAME, "body").text
         self.assertNotIn("Buy shoes", page_text)

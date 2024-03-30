@@ -71,7 +71,7 @@ class ListViewTest(TestCase):
         other_list = List.objects.create()
         Item.objects.create(text="other list item 1", list=other_list)
         Item.objects.create(text="other list item 2", list=other_list)
-        
+
         response = self.client.get(f"/lists/{correct_list.id}")
         """
             Here's a new helper method: instead of using the slightly annoying
@@ -88,6 +88,12 @@ class ListViewTest(TestCase):
         list_ = List.objects.create()
         response = self.client.get(f"/lists/{ list_.id }")
         self.assertTemplateUsed(response, "list.html")
+
+    def test_passes_correct_list_to_template(self):
+        List.objects.create()
+        correct_list = List.objects.create()
+        response = self.client.get(f"/lists/{ correct_list.id }")
+        self.assertEqual(response.context["list"], correct_list)
 
 
 class NewListTest(TestCase):
