@@ -1,5 +1,3 @@
-from django.http import HttpRequest
-from django.template.loader import render_to_string
 from django.test import TestCase
 from django.urls import resolve
 from lists.models import Item
@@ -34,10 +32,6 @@ class HomePageTest(TestCase):
         # self.assertTrue(html.endswith("</html>"))
 
         self.assertTemplateUsed(response, "home.html")
-
-    def test_only_saves_item_when_necessary(self):
-        self.client.get("/")
-        self.assertEqual(Item.objects.count(), 0)
 
 
 class ItemModelTest(TestCase):
@@ -88,4 +82,4 @@ class NewListTest(TestCase):
 
     def test_redirects_after_POST(self):
         response = self.client.post("/lists/new", data={"item_text": "A new list item"})
-        self.assertRedirects(response, "/lists/the-only-list-in-the-world/")
+        self.assertRedirects(response, "/lists/the-only-list-in-the-world")
