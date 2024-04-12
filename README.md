@@ -28,3 +28,9 @@ Excerpt From
 Test-Driven Development with Python
 Harry J.W. Percival
 This material may be protected by copyright.
+
+to collect static files in one place to upload to server/cdn
+
+```bash
+python manage.py collectstatic
+```
