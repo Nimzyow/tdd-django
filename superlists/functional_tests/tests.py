@@ -104,3 +104,28 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys("Buy milk")
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table("1: Buy milk")
+
+    def test_layout_and_styling(self):
+        # Nima goes to homepage
+        self.browser.get(self.live_server_url)
+
+        # his browser window is set to a very specific size
+        self.browser.set_window_size(1024, 768)
+
+        # He notices the input box is nicely centred
+        inputbox = self.browser.find_element(By.ID, "id_new_item")
+        self.assertAlmostEqual(
+            inputbox.location["x"] + inputbox.size["width"] / 2,
+            512,
+            delta=10
+        )
+
+        inputbox.send_keys("testing")
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table("1: testing")
+        inputbox = self.browser.find_element(By.ID, "id_new_item")
+        self.assertAlmostEqual(
+            inputbox.location["x"] + inputbox.size["width"] / 2,
+            512,
+            delta=10
+        )
