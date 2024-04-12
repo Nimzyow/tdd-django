@@ -34,3 +34,13 @@ to collect static files in one place to upload to server/cdn
 ```bash
 python manage.py collectstatic
 ```
+
+to build Django image
+```bash
+docker build -t superlists .
+```
+
+To run Django in container
+```bash
+docker run -p 8888:8888 -it superlists
+```
